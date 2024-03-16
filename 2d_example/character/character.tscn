@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://2d_example/character/arrow.png" type="Texture" id=1]
+[ext_resource path="res://2d_example/character/character.gd" type="Script" id=2]
+
+[node name="character" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Character" type="Sprite" parent="."]
+texture = ExtResource( 1 )

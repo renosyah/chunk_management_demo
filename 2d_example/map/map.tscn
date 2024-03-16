@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://2d_example/map/map.gd" type="Script" id=1]
+[ext_resource path="res://chunk_manajement/chunk_management.tscn" type="PackedScene" id=2]
+[ext_resource path="res://2d_example/map/terrain_curve.tres" type="Curve" id=3]
+
+[node name="map" type="Node"]
+script = ExtResource( 1 )
+terrain_curve = ExtResource( 3 )
+
+[node name="chunk_management" parent="." instance=ExtResource( 2 )]
+
+[connection signal="update_map" from="chunk_management" to="." method="_on_chunk_management_update_map"]
