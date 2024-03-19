@@ -6,7 +6,7 @@ is a handy module to handle your chunk, if you make open world with procedural t
 
 for more detail, tun this project and see map.gd
 
-````
+```
 
 onready var chunk_management = $chunk_management
 
