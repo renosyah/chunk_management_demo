@@ -15,6 +15,7 @@ margin_top = -256.0
 margin_right = 256.0
 margin_bottom = 256.0
 rect_min_size = Vector2( 512, 512 )
+rect_pivot_offset = Vector2( 256, 256 )
 expand = true
 
 [node name="Label" type="Label" parent="texture"]

@@ -9,7 +9,6 @@ onready var current_chunk = $Control/CanvasLayer/Control/VBoxContainer/current_c
 func _ready():
 	character.position = Vector2.ZERO
 	
-	map.map_seed = 1
 	map.start_position = character.position
 	map.generate_map()
 	
@@ -22,7 +21,6 @@ func _process(delta):
 	
 	player_pos.text = "camera pos : %s" % location
 	current_chunk.text =  "current chunk : %s" % map.get_current_chunk_id()
-
 
 func _on_back_pressed():
 	get_tree().change_scene("res://main.tscn")

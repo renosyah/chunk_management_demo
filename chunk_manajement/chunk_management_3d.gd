@@ -1,29 +1,28 @@
 extends Node
-class_name ChunkManagement
+class_name ChunkManagement3D
 
 signal update_map(_chunks_to_remove, _chunks_to_add)
 
 enum ChunkScale { NORMAL, LARGE }
 
-export var start_position :Vector2
-export var chunk_size :Vector2 = Vector2(64,64)
-export var chunk_margin :Vector2 = Vector2.ONE
+export var start_position :Vector3
+export var chunk_size :Vector3 = Vector3(64,64,64)
 export(ChunkScale) var chunk_scale = ChunkScale.NORMAL
 
-# id : ChunkData
+# id : ChunkData3D
 var _chunks :Dictionary = {}
 
-var _current_chunk_id :Vector2
-var _last_chunk_id :Vector2
+var _current_chunk_id :Vector3
+var _last_chunk_id :Vector3
 
-class ChunkData:
-	var id :Vector2
-	var position :Vector2
+class ChunkData3D:
+	var id :Vector3
+	var position :Vector3
 	var node_name :String
 	
 func init_starter_chunk():
 	var start_id = _position_to_chunk_id(start_position)
-	_last_chunk_id = start_id - Vector2.LEFT
+	_last_chunk_id = start_id - Vector3.LEFT
 	_current_chunk_id = start_id
 	
 	var dirs :Array = _get_dirs(_get_scale())
@@ -37,21 +36,21 @@ func init_starter_chunk():
 		
 	emit_signal("update_map", [], add)
 	
-func _position_to_chunk_id(pos :Vector2) -> Vector2:
+func _position_to_chunk_id(pos :Vector3) -> Vector3:
 	var chunk_id =  pos / chunk_size
-	return Vector2(int(chunk_id.x),int(chunk_id.y))
+	return Vector3(int(chunk_id.x),int(chunk_id.z), int(chunk_id.y))
 	
-func create_chunk_data(id :Vector2) -> ChunkData:
-	var data :ChunkData = ChunkData.new()
+func create_chunk_data(id :Vector3) -> ChunkData3D:
+	var data :ChunkData3D = ChunkData3D.new()
 	data.id = id
-	data.position = id * (chunk_size + chunk_margin)
-	data.node_name = "chunk_%s_%s" % [id.x, id.y]
+	data.position = id * chunk_size
+	data.node_name = "chunk_%s_%s_%s" % [id.x, id.y, id.z]
 	return data
 	
-func duplicate_chunk_data(data :ChunkData) -> ChunkData:
+func duplicate_chunk_data(data :ChunkData3D) -> ChunkData3D:
 	return create_chunk_data(data.id)
 	
-func get_current_chunk() -> ChunkData:
+func get_current_chunk() -> ChunkData3D:
 	return _chunks[_current_chunk_id]
 	
 func first_neighbor_chunks() -> Array:
@@ -60,7 +59,7 @@ func first_neighbor_chunks() -> Array:
 	
 	var dirs :Array = _get_dirs(1)
 	for dir in dirs:
-		var id :Vector2 = dir + current_chunk.id
+		var id :Vector3 = dir + current_chunk.id
 		if not _chunks.has(id):
 			continue
 			
@@ -79,7 +78,7 @@ func second_neighbor_chunks() -> Array:
 	
 	var dirs :Array = _get_dirs(2)
 	for dir in dirs:
-		var id :Vector2 = dir + current_chunk.id
+		var id :Vector3 = dir + current_chunk.id
 		if not _chunks.has(id):
 			continue
 			
@@ -94,11 +93,11 @@ func second_neighbor_chunks() -> Array:
 		
 	return data
 	
-func update_camera_location(to :Vector2):
+func update_camera_location(to :Vector3):
 	if _chunks.empty():
 		return
 		
-	var closest_chunk :ChunkData = _get_closest_chunk(to)
+	var closest_chunk :ChunkData3D = _get_closest_chunk(to)
 	if closest_chunk == null:
 		return
 		
@@ -110,13 +109,13 @@ func update_camera_location(to :Vector2):
 	
 	_send_update_chunks()
 	
-func _add_chunk(val :ChunkData):
+func _add_chunk(val :ChunkData3D):
 	if _chunks.has(val.id):
 		return
 		
 	_chunks[val.id] = val
 	
-func _remove_chunk(val :ChunkData):
+func _remove_chunk(val :ChunkData3D):
 	if not _chunks.has(val.id):
 		return
 		
@@ -128,9 +127,10 @@ func _get_scale() -> int:
 func _get_dirs(_scale :int) -> Array:
 	var dirs :Array = []
 	
-	for x in range(-_scale, _scale + 1):
-		for y in range(-_scale, _scale + 1):
-			dirs.append(Vector2(x, y))
+	for y in range(-_scale, _scale + 1):
+		for x in range(-_scale, _scale + 1):
+			for z in range(-_scale, _scale + 1):
+				dirs.append(Vector3(x, y, z))
 			
 	return dirs
 	
@@ -167,11 +167,11 @@ func _remove_if_exist(_data :Array, _refrences :Array) -> Array:
 			
 	return new_array
 	
-func _get_chunk_ids(from :Vector2) -> Array:
+func _get_chunk_ids(from :Vector3) -> Array:
 	var datas : Array = []
 	var dirs :Array = _get_dirs(_get_scale())
 	for dir in dirs:
-		var id :Vector2 = dir + from
+		var id :Vector3 = dir + from
 		datas.append(id)
 		
 	return datas
@@ -194,14 +194,14 @@ func _get_chunk_to_add(chunk_ids :Array) -> Array:
 		
 	return datas
 	
-func _get_closest_chunk(from :Vector2) -> ChunkData:
+func _get_closest_chunk(from :Vector3) -> ChunkData3D:
 	if _chunks.empty():
 		return null
 		
 	var list :Array = _chunks.values()
-	var val :ChunkData = list[0]
+	var val :ChunkData3D = list[0]
 	for i in list:
-		var data :ChunkData = i
+		var data :ChunkData3D = i
 		if data == val:
 			continue
 			

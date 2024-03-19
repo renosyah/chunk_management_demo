@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://3d_example/map/chunk/chunk.gd" type="Script" id=1]
+
+[node name="chunk" type="Spatial"]
+transform = Transform( 99, 0, 0, 0, 1, 0, 0, 0, 99, 0, 0, 0 )
+script = ExtResource( 1 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+double_sided = false
+__meta__ = {
+"_editor_description_": ""
+}

@@ -4,5 +4,5 @@ extends Node2D
 func _process(delta):
 	var to = get_global_mouse_position()
 	var dir = position.direction_to(to)
-	position += dir * 200 * delta
+	position += dir * 100 * delta
 	look_at(to)

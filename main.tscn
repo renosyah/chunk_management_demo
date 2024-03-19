@@ -1,11 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://2d_example/map/terrain_curve.tres" type="Curve" id=2]
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
-terrain_curve = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
@@ -209,24 +207,119 @@ max_value = 6.0
 step = 0.001
 value = 1.0
 
+[node name="MarginContainer6" type="MarginContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer"]
+visible = false
+margin_top = 240.0
+margin_right = 493.0
+margin_bottom = 264.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer"]
+visible = false
+margin_top = 268.0
+margin_right = 493.0
+margin_bottom = 284.0
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer6"]
+margin_top = 1.0
+margin_right = 75.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "fallof start"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer6"]
+margin_left = 79.0
+margin_right = 89.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="fallof_start" type="HSlider" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer6"]
+margin_left = 93.0
+margin_right = 493.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 400, 0 )
+max_value = 1.0
+step = 0.001
+value = 0.5
+
+[node name="MarginContainer7" type="MarginContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer"]
+visible = false
+margin_top = 288.0
+margin_right = 493.0
+margin_bottom = 312.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer"]
+visible = false
+margin_top = 316.0
+margin_right = 493.0
+margin_bottom = 332.0
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer7"]
+margin_top = 1.0
+margin_right = 75.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "fallof end"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer7"]
+margin_left = 79.0
+margin_right = 89.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="fallof_end" type="HSlider" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer7"]
+margin_left = 93.0
+margin_right = 493.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 400, 0 )
+max_value = 1.0
+step = 0.001
+value = 1.0
+
 [node name="MarginContainer5" type="MarginContainer" parent="Control/CanvasLayer/Control/VBoxContainer"]
 margin_top = 756.0
 margin_right = 600.0
 margin_bottom = 780.0
 rect_min_size = Vector2( 0, 24 )
 
-[node name="Button2" type="Button" parent="Control/CanvasLayer/Control/VBoxContainer"]
-margin_left = 250.0
+[node name="CenterContainer3" type="CenterContainer" parent="Control/CanvasLayer/Control/VBoxContainer"]
 margin_top = 784.0
-margin_right = 350.0
+margin_right = 600.0
 margin_bottom = 864.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer3"]
+margin_left = 184.0
+margin_right = 416.0
+margin_bottom = 80.0
+
+[node name="Button2" type="Button" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer3/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 100, 80 )
 size_flags_horizontal = 4
-text = "Generate"
+text = "Generate 2D"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer3/HBoxContainer"]
+margin_left = 104.0
+margin_right = 128.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="Button3" type="Button" parent="Control/CanvasLayer/Control/VBoxContainer/CenterContainer3/HBoxContainer"]
+margin_left = 132.0
+margin_right = 232.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 80 )
+size_flags_horizontal = 4
+text = "Generate 3D"
 
 [connection signal="drag_ended" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer/seed_slider" to="." method="_on_seed_slider_drag_ended"]
 [connection signal="drag_ended" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer2/octave_slider" to="." method="_on_octave_slider_drag_ended"]
 [connection signal="drag_ended" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer3/period_slider" to="." method="_on_period_slider_drag_ended"]
 [connection signal="drag_ended" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer4/persistence_slider" to="." method="_on_persistence_slider_drag_ended"]
 [connection signal="drag_ended" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer5/lacunarity_slider" to="." method="_on_lacunarity_slider_drag_ended"]
-[connection signal="pressed" from="Control/CanvasLayer/Control/VBoxContainer/Button2" to="." method="_on_Button_pressed"]
+[connection signal="drag_ended" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer6/fallof_start" to="." method="_on_fallof_start_drag_ended"]
+[connection signal="drag_ended" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer2/VBoxContainer/HBoxContainer7/fallof_end" to="." method="_on_fallof_end_drag_ended"]
+[connection signal="pressed" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer3/HBoxContainer/Button2" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Control/VBoxContainer/CenterContainer3/HBoxContainer/Button3" to="." method="_on_Button3_pressed"]
