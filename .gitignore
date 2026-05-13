@@ -1,0 +1,16 @@
+# Godot generated files
+.import/
+.export/
+*.translation
+*.mono/
+
+# Editor cache
+.editor/
+.editor_settings-3.tres
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
