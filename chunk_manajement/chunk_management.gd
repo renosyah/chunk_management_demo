@@ -150,15 +150,17 @@ func _get_closest_chunk(from :Vector2) -> ChunkData:
 		
 	var list :Array = _chunks.values()
 	var val :ChunkData = list[0]
+	var val_range :float = val.position.distance_squared_to(from)
+	
 	for i in list:
 		var data :ChunkData = i
 		if data == val:
 			continue
 			
 		var a = data.position.distance_squared_to(from)
-		var b = val.position.distance_squared_to(from)
-		if a < b:
+		if a < val_range:
 			val = i
+			val_range = a
 			continue
 			
 	return val
