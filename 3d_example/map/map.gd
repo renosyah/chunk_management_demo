@@ -9,7 +9,6 @@ func generate_map():
 	chunk_management.start_position = start_position
 	chunk_management.chunk_size = Vector2(Global.image_size_w, Global.image_size_h)
 	chunk_management.chunk_margin = Vector2.ZERO
-	chunk_management.chunk_scale = chunk_management.ChunkScale.NORMAL
 	chunk_management.init_starter_chunk()
 	
 # update camera current position

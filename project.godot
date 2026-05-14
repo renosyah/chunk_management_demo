@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "ChunkManagement",
 "language": "GDScript",
 "path": "res://chunk_manajement/chunk_management.gd"
-}, {
-"base": "Node",
-"class": "ChunkManagement3D",
-"language": "GDScript",
-"path": "res://chunk_manajement/chunk_management_3d.gd"
 } ]
 _global_script_class_icons={
-"ChunkManagement": "",
-"ChunkManagement3D": ""
+"ChunkManagement": ""
 }
 
 [application]
