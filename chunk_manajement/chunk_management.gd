@@ -11,6 +11,9 @@ export var chunk_range :int = 1
 # id : ChunkData
 var _chunks :Dictionary = {}
 
+# smaller 1 range for calculation purposes
+var _chunks_temp :Dictionary = {} 
+
 var _current_chunk_id :Vector2
 var _last_chunk_id :Vector2
 
@@ -25,13 +28,19 @@ func init_starter_chunk():
 	_current_chunk_id = start_id
 	
 	_chunks.clear()
+	_chunks_temp.clear()
 	
-	var positions :Array = _get_adjacent_chunks(_current_chunk_id)
+	var positions :Array = _get_adjacent_chunks(_current_chunk_id, chunk_range)
 	var add :Array = []
 	for pos in positions:
 		var data = create_chunk_data(pos)
 		_add_chunk(data)
 		add.append(data)
+		
+	# temp
+	positions = _get_adjacent_chunks(_current_chunk_id, 1)
+	for id in positions:
+		_chunks_temp[id] = create_chunk_data(id)
 		
 	emit_signal("update_map", [], add)
 	
@@ -86,7 +95,7 @@ func _remove_chunk(val :ChunkData):
 func _send_update_chunks():
 	var data :Dictionary = _compare_adjacent_tiles(
 		_chunks.keys(),
-		_get_adjacent_chunks(_current_chunk_id)
+		_get_adjacent_chunks(_current_chunk_id, chunk_range)
 	)
 	
 	 # update global chunks
@@ -97,6 +106,13 @@ func _send_update_chunks():
 	var added :Array = _get_chunk_to_add(data["added"])
 	for i in added:
 		_add_chunk(i)
+		
+	_chunks_temp.clear()
+	
+	# update temp
+	var positions = _get_adjacent_chunks(_current_chunk_id, 1)
+	for id in positions:
+		_chunks_temp[id] = create_chunk_data(id)
 		
 	emit_signal("update_map", removed, added)
 	
@@ -144,20 +160,20 @@ func _get_chunk_to_add(chunk_ids :Array) -> Array:
 		
 	return datas
 	
-func _get_closest_chunk(from :Vector2) -> ChunkData:
-	if _chunks.empty():
+func _get_closest_chunk(cam_location :Vector2) -> ChunkData:
+	if _chunks_temp.empty():
 		return null
 		
-	var list :Array = _chunks.values()
+	var list :Array = _chunks_temp.values()
 	var val :ChunkData = list[0]
-	var val_range :float = val.position.distance_squared_to(from)
+	var val_range :float = val.position.distance_squared_to(cam_location)
 	
 	for i in list:
 		var data :ChunkData = i
 		if data == val:
 			continue
 			
-		var a = data.position.distance_squared_to(from)
+		var a = data.position.distance_squared_to(cam_location)
 		if a < val_range:
 			val = i
 			val_range = a
@@ -200,7 +216,7 @@ func get_snap_direction(facing_direction :Vector2) -> Vector2:
 
 func get_chunks_in_cone(center: Vector2, forward_dir: Vector2, reverse:bool = false) -> Array:
 	var result = []
-	var tiles: Array = _get_adjacent_chunks(center)
+	var tiles: Array = _get_adjacent_chunks(center, chunk_range)
 	tiles.erase(center)
 	
 	var half_angle = deg2rad(90.0) # 90° cone total
@@ -220,8 +236,7 @@ func get_chunks_in_cone(center: Vector2, forward_dir: Vector2, reverse:bool = fa
 	
 	return result
 	
-func _get_adjacent_chunks(from: Vector2 = Vector2.ZERO) -> Array:
-	var radius: int = chunk_range
+func _get_adjacent_chunks(from: Vector2, radius: int) -> Array:
 	var directions :Array = _ARROW_DIRECTIONS + _DIAGONAL_DIRECTIONS
 	var visited := {}
 	var frontier := [from]

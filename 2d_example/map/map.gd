@@ -11,7 +11,7 @@ onready var chunk_management = $chunk_management
 func generate_map():
 	chunk_management.start_position = start_position
 	chunk_management.chunk_size = Vector2(chunk_size_w, chunk_size_h)
-	chunk_management.chunk_margin = Vector2.ONE * 4
+	chunk_management.chunk_margin = Vector2.ZERO
 	chunk_management.init_starter_chunk()
 	
 # update camera current position

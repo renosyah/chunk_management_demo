@@ -7,9 +7,6 @@ onready var player_pos = $Control/CanvasLayer/Control/VBoxContainer/player_pos
 onready var current_chunk = $Control/CanvasLayer/Control/VBoxContainer/current_chunk
 
 func _ready():
-	character.position = Vector2.ZERO
-	
-	map.start_position = character.position
 	map.generate_map()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
